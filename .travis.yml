@@ -7,8 +7,8 @@ script:
   - echo "$DOCKERHUB_PWD" | docker login -u "$DOCKERHUB_USR" --password-stdin
   - docker build -t http sample-application-http-api-server
   - docker build -t db sample-application-db-changelog-job
-  - docker push franckyi/tp2:http
-  - docker push franckyi/tp2:db
+  - docker push $DOCKERHUB_USR/tp2:http
+  - docker push $DOCKERHUB_USR/tp2:db
 cache:
   directories:
     - $HOME/.m2
