@@ -10,22 +10,15 @@ addons:
 
 jobs:
   include:
-    - stage: maven-clean
-      script: mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent
-    - stage: maven-test
-      script: mvn verify
-    - stage: maven-analyse
-      script: mvn sonar:sonar -Dsonar.projectKey=Franckyi_sample-application-students
-    - stage: docker-init
+    - stage: build
+      script: mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -Dsonar.projectKey=Franckyi_sample-application-students
+    - stage: deploy
       script: echo "$DOCKERHUB_PWD" | docker login -u "$DOCKERHUB_USR" --password-stdin
-    - stage: docker-build
-      script: docker build -t http sample-application-http-api-server
+    - script: docker build -t http sample-application-http-api-server
     - script: docker build -t db sample-application-db-changelog-job
-    - stage: docker-tag
-      script: docker tag http $DOCKERHUB_USR/tp2_http:1.0
+    - script: docker tag http $DOCKERHUB_USR/tp2_http:1.0
     - script: docker tag db $DOCKERHUB_USR/tp2_db:1.0
-    - stage: docker-deploy
-      script: docker push $DOCKERHUB_USR/tp2_http:1.0
+    - script: docker push $DOCKERHUB_USR/tp2_http:1.0
     - script: docker push $DOCKERHUB_USR/tp2_db:1.0
 
 cache:
