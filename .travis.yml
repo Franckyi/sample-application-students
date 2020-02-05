@@ -22,6 +22,10 @@ jobs:
         - docker push $DOCKERHUB_USR/tp2_http:1.0
         - docker push $DOCKERHUB_USR/tp2_db:1.0
 
+stages:
+  - name: deploy
+    if: branch = master
+
 cache:
   directories:
     - $HOME/.m2
