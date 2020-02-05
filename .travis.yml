@@ -1,9 +1,13 @@
 language: java
 service:
   - docker
+
+addons:
+  sonarcloud:
+    organization: "franckyi"
+
 script:
-  - mvn clean verify
-  - mvn package -DskipTests
+  - mvn clean verify sonar:sonar -Pcoverage -Dsonar.projectKey=franckyi:sample-application-students
   - echo "$DOCKERHUB_PWD" | docker login -u "$DOCKERHUB_USR" --password-stdin
   - docker build -t http sample-application-http-api-server
   - docker build -t db sample-application-db-changelog-job
@@ -11,6 +15,7 @@ script:
   - docker tag db $DOCKERHUB_USR/tp2_db:1.0
   - docker push $DOCKERHUB_USR/tp2_http:1.0
   - docker push $DOCKERHUB_USR/tp2_db:1.0
+
 cache:
   directories:
     - $HOME/.m2
