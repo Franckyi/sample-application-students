@@ -5,10 +5,10 @@ script:
   - mvn clean verify
   - mvn package -DskipTests
   - echo "$DOCKERHUB_PWD" | docker login -u "$DOCKERHUB_USR" --password-stdin
-  - docker build -t http sample-application-http-api-server
-  - docker build -t db sample-application-db-changelog-job
-  - docker push $DOCKERHUB_USR/tp2:http
-  - docker push $DOCKERHUB_USR/tp2:db
+  - docker build -t tp2_http sample-application-http-api-server
+  - docker build -t tp2_db sample-application-db-changelog-job
+  - docker push "$DOCKERHUB_USR"/tp2_http:1.0
+  - docker push "$DOCKERHUB_USR"/tp2_db:1.0
 cache:
   directories:
     - $HOME/.m2
