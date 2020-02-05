@@ -5,6 +5,8 @@ service:
 addons:
   sonarcloud:
     organization: "franckyi"
+    token:
+      secure: $SONAR_TOKEN
 
 script:
   - mvn clean verify sonar:sonar -Pcoverage -Dsonar.projectKey=franckyi:sample-application-students
