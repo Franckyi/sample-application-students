@@ -21,6 +21,7 @@ jobs:
         - docker push $DOCKERHUB_USR/tp2_db:1.0
 
 stages:
+  - name: build
   - name: deploy
     if: branch = master
 
